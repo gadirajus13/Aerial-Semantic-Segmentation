@@ -100,4 +100,4 @@ Here are a few of the results obtained from running the model on the test data:
 ![Test 2](results/Test%20Results%203.png)
 
 ## Future Work
-In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in teh dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy.
+In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in the dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy. Additionally, I would like to experiement with pretraining the YOLOv5 model on an aerial object detection task and using those pre-trained to initilize my YOLO_encoder to see if that further promotes learning and getting over 86% pixel accuracy.
