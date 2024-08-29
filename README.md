@@ -1,159 +1,107 @@
 # Aerial-Semantic-Segmentation
-A custom YOLO_UNet approach for conducting semantic segmentation from Drone images for 22 distinct classes
 
-<ANTARTIFACTLINK identifier="aerial-segmentation-readme-md" type="text/markdown" title="Markdown-formatted README for Aerial Segmentation Project" isClosed="true" />
+This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery for 22 distinct classes.
 
-Aerial Segmentation using Custom YoloUNet Architecture
-This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery.
-Table of Contents
+## Project Overview
 
-Project Overview
-Requirements
-Setup
-Dataset
-Model Architecture
-Training Process
-Evaluation
-Usage
-Results
-
-Project Overview
 This project aims to perform semantic segmentation on aerial imagery using a custom deep learning architecture. The model combines the feature extraction capabilities of YOLOv5 with the precise localization of U-Net to achieve accurate segmentation results.
-Requirements
 
-Python 3.7+
-PyTorch
-torchvision
-numpy
-pandas
-matplotlib
-opencv-python (cv2)
-albumentations
-ultralytics (for YOLOv5)
+## Requirements
 
-Setup
+- Python 3.7+
+- PyTorch
+- torchvision
+- numpy
+- pandas
+- matplotlib
+- opencv-python (cv2)
+- albumentations
+- ultralytics (for YOLOv5)
 
-Clone the repository:
-bashCopygit clone https://github.com/your-username/aerial-segmentation.git
-cd aerial-segmentation
+## Dataset
+The project uses the Aerial Semantic Segmentation Drone Dataset from Kaggle available at:
+https://www.kaggle.com/datasets/bulentsiyah/semantic-drone-dataset
 
-Install the required packages:
-bashCopypip install -r requirements.txt
-
-Download the YOLOv5 weights:
-bashCopywget https://github.com/ultralytics/yolov5/releases/download/v6.1/yolov5s.pt
+The dataset consists of 400 images with semantic labels for 22 different classes such as people, dogs, cars, trees, vegetation, etc.
+The dataset was divided into train, validation, and tests sets on a 70,20,10 split with extensive data augmentation to prevent overfitting and promote learning of undersampled classes.
 
 
-Dataset
-The project uses the Semantic Drone Dataset. Organize your data as follows:
-Copyinput_data/
-├── dataset/
-│   └── semantic_drone_dataset/
-│       ├── original_images/
-│       └── label_images_semantic/
-└── class_dict_seg.csv
-Model Architecture
-The custom YoloUNet architecture consists of two main components:
-
+## Model Architecture
 YOLOv5 Encoder:
-
-Utilizes the YOLOv5 model as a feature extractor
-Extracts multi-scale features from the input images
-Provides rich semantic information due to its pretraining on object detection tasks
-
+    Utilizes the YOLOv5 model as a feature extractor
+    Extracts multi-scale features from the input images
+    Provides rich semantic information due to its pretraining on object detection tasks
 
 Custom U-Net Decoder:
 
 Consists of a series of upsampling blocks (Up modules)
 Each Up module includes:
-
-Bilinear upsampling
-Concatenation with skip connections from the encoder
-Two convolutional layers with batch normalization and ReLU activation
-
-
+    Bilinear upsampling
+    Concatenation with skip connections from the encoder
+    Two convolutional layers with batch normalization and ReLU activation
 Gradually increases spatial resolution while decreasing channel depth
 Incorporates skip connections to preserve fine-grained details
-
-
 
 Key components of the architecture:
 
 YoloEncoder: Wraps the YOLOv5 model and extracts features at different scales
 UNetWithYoloEncoder: Combines the YOLO encoder with the U-Net decoder
-Up: Custom module for upsampling and merging features
+Up: Custom module for upsampling and merging features with residuals
 OutConv: Final convolutional layer to produce the segmentation map
 
 The architecture is designed to leverage the strengths of both YOLO (efficient feature extraction) and U-Net (precise localization), making it well-suited for aerial image segmentation tasks.
-Training Process
+
+## Training Process
 The training process involves several key components:
 
 Data Preparation:
-
-Custom AerialDataset class for loading and preprocessing images and masks
-Data augmentation using Albumentations library (e.g., flips, rotations, color jittering)
-
+    Custom AerialDataset class for loading and preprocessing images and masks
+    Data augmentation using Albumentations library (e.g., flips, rotations, color jittering)
 
 Loss Function:
-
-Combined loss using Dice Loss and Cross-Entropy Loss
-Dice Loss helps with class imbalance issues
-Cross-Entropy Loss provides stable gradients
-
+    Combined loss using Dice Loss and Cross-Entropy Loss to balance pixel accuracy and mIoU with a higher weight given to the Dice Loss 
+    Dice Loss helps with class imbalance issues while Cross-Entropy Loss provides stable gradients and aids in focusing on overall accuracy
 
 Optimization:
-
-Adam optimizer with initial learning rate of 0.001
-Learning rate scheduling using ReduceLROnPlateau
-Gradient clipping to prevent exploding gradients
-
+    Adam optimizer with initial learning rate of 0.001
+    Learning rate scheduling using ReduceLROnPlateau
 
 Training Loop:
-
-Mixed precision training using torch.cuda.amp for faster training and lower memory usage
-Validation after each epoch to monitor performance
-Early stopping to prevent overfitting
-Model checkpointing to save the best model based on validation loss
-
+    Mixed precision training using torch.cuda.amp for faster training and lower memory usage
+    Validation after each epoch to monitor performance
+    Early stopping to prevent overfitting
+    Model checkpointing to save the best model based on validation loss
 
 Monitoring and Visualization:
-
-Tracking of training/validation loss, accuracy, and mIoU
-Periodic visualization of segmentation results during training
-
-
+    Tracking of training/validation loss, accuracy, and mIoU
+    Periodic visualization of segmentation results during training
 
 The training process is designed to be efficient and effective, with mechanisms in place to handle the challenges specific to aerial image segmentation, such as class imbalance and the need for precise boundaries.
-Evaluation
+
+## Evaluation Metrics
 The model is evaluated using:
+    Mean Intersection over Union (mIoU)
+    Pixel Accuracy
+    Combined Loss (Dice Loss + Cross-Entropy Loss)
 
-Mean Intersection over Union (mIoU)
-Pixel Accuracy
-Combined Loss (Dice Loss + Cross-Entropy Loss)
+Mean Intersection over Union (mIoU):
+    Provides a measure of overlap between predicted and ground truth segmentation masks
+    Less sensitive to class imbalance compared to pixel accuracy
+    Penalizes both over-segmentation and under-segmentation
+    Gives equal importance to all classes, regardless of their frequency in the dataset
 
-Usage
-To use the trained model for inference:
-
-Load the trained model:
-pythonCopymodel = UNetWithYoloEncoder(yolo_encoder, n_classes=num_classes)
-model.load_state_dict(torch.load('YoloUnetV7.pt'))
-model.eval()
-
-Prepare your input image:
-pythonCopyimage = cv2.imread('path_to_your_image.jpg')
-image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-# Apply necessary preprocessing
-
-Run inference:
-pythonCopywith torch.no_grad():
-    output = model(image.unsqueeze(0).to(device))
-predicted_mask = torch.argmax(output, dim=1).squeeze().cpu().numpy()
-
-Visualize the results using the plot_results function provided in the notebook.
-
-Results
+Pixel Accuracy:
+    Represents the percentage of correctly classified pixels
+    Can be misleading in cases of severe class imbalance which is prevalent in this data    
+    
+## Results
 The model's performance can be assessed using the plots generated after training, showing:
 
 Training and Validation Loss
 Training and Validation Accuracy
 Training and Validation mIoU
+
+This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of around 81%, however have a much lwoer mIoU of .32, indicating that this architecture provides more accurate masks per class on average compared to typical approaches.
+
+## Future Work
+In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in teh dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy.
