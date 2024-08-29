@@ -1,6 +1,6 @@
 # Aerial-Semantic-Segmentation
 
-This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery for 22 distinct classes. The model achieves 86% pixel accuracy and a mIoU of 0.53 when trained on a dataset of only 280 images with validation done on 80 images and testing on 40 images. Furthermore, this custom architecture produces a **71% higher mIoU** while also achieving **6% higher accuracy** compared to a baseline model of UNet MobileNet_v2 with ImageNet weights.
+This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery for 22 distinct classes. The model achieves 86% pixel accuracy and a mIoU of 0.53 when trained on a dataset of only 280 images with validation done on 80 images and testing on 40 images. Furthermore, my approach with the custom architecture produces a **71% higher mIoU** while also achieving **6% higher accuracy** compared to a baseline model of UNet MobileNet_v2 with ImageNet weights.
 
 ## Project Overview
 
