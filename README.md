@@ -83,22 +83,20 @@ The model is evaluated using:
     Combined Loss (Dice Loss + Cross-Entropy Loss)
 
 ### Mean Intersection over Union (mIoU):
-- Provides a measure of overlap between predicted and ground truth segmentation masks
-- Less sensitive to class imbalance compared to pixel accuracy
-- Penalizes both over-segmentation and under-segmentation
+- Provides a measure of overlap between predicted and ground truth segmentation masks, penalizing both over-segmentation and under-segmentation
+- More sensitive to class imbalance compared to pixel accuracy, which can be beneficial for detecting poor performance on underrepresented classes
 - Gives equal importance to all classes, regardless of their frequency in the dataset
 
 ### Pixel Accuracy:
-- Represents the percentage of correctly classified pixels but can be misleading in cases of severe class imbalance which is prevalent in this data   
+- Represents the percentage of correctly classified pixels but can be misleading in cases of severe class imbalance which is prevalent in this dataset   
     
 ## Results
-The model's performance can be assessed using the plots generated after training, showing:
+The model's performance can be assessed using the plots generated after training, showing the loss, accuracy, and mIoU. Furthermore, the model is then tested on the test dataset which consists of 40 images.
 
-Training and Validation Loss
-Training and Validation Accuracy
-Training and Validation mIoU
+This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of around 81%, however have a much lwoer mIoU of .32, indicating that this architecture provides more accurate masks per class on average compared to typical approaches. The majority of discrepency between the mIoU and pixel accuracy comes from the classification for under-sampled classes within the dataset, which means the model can be further improved with mroe data preprocessing.
 
-This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of around 81%, however have a much lwoer mIoU of .32, indicating that this architecture provides more accurate masks per class on average compared to typical approaches.
+Here are a few of the results obtained from running the model on the test data:
+
 
 ## Future Work
 In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in teh dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy.
