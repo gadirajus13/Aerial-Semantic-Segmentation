@@ -27,13 +27,12 @@ The dataset was divided into train, validation, and tests sets on a 70,20,10 spl
 
 
 ## Model Architecture
-YOLOv5 Encoder:
--Utilizes the YOLOv5 model as a feature extractor
--Extracts multi-scale features from the input images
--Provides rich semantic information due to its pretraining on object detection tasks
+### YOLOv5 Encoder:
+- Utilizes the YOLOv5 model as a feature extractor
+- Extracts multi-scale features from the input images
+- Provides rich semantic information due to its pretraining on object detection tasks
 
-Custom U-Net Decoder:
-
+### Custom U-Net Decoder:
 - Consists of a series of upsampling blocks (Up modules)
 - Each Up module includes:
     - Bilinear upsampling
@@ -42,39 +41,38 @@ Custom U-Net Decoder:
 - Gradually increases spatial resolution while decreasing channel depth
 - Incorporates skip connections to preserve fine-grained details
 
-Key components of the architecture:
-
-YoloEncoder: Wraps the YOLOv5 model and extracts features at different scales
-UNetWithYoloEncoder: Combines the YOLO encoder with the U-Net decoder
-Up: Custom module for upsampling and merging features with residuals
-OutConv: Final convolutional layer to produce the segmentation map
+## Key Components:
+- YoloEncoder: Wraps the YOLOv5 model and extracts features at different scales
+- UNetWithYoloEncoder: Combines the YOLO encoder with the U-Net decoder
+- Up: Custom module for upsampling and merging features with residuals
+- OutConv: Final convolutional layer to produce the segmentation map
 
 The architecture is designed to leverage the strengths of both YOLO (efficient feature extraction) and U-Net (precise localization), making it well-suited for aerial image segmentation tasks.
 
 ## Training Process
 The training process involves several key components:
 
-Data Preparation:
-    Custom AerialDataset class for loading and preprocessing images and masks
-    Data augmentation using Albumentations library (e.g., flips, rotations, color jittering)
+### Data Preparation:
+- Custom AerialDataset class for loading and preprocessing images and masks
+- Data augmentation using Albumentations library (e.g., flips, rotations, distortion, brightnes)
 
-Loss Function:
-    Combined loss using Dice Loss and Cross-Entropy Loss to balance pixel accuracy and mIoU with a higher weight given to the Dice Loss 
-    Dice Loss helps with class imbalance issues while Cross-Entropy Loss provides stable gradients and aids in focusing on overall accuracy
+### Loss Function:
+- Combined loss using Dice Loss and Cross-Entropy Loss to balance pixel accuracy and mIoU with a higher weight given to the Dice Loss 
+- Dice Loss helps with class imbalance issues while Cross-Entropy Loss provides stable gradients and aids in focusing on overall accuracy
 
-Optimization:
-    Adam optimizer with initial learning rate of 0.001
-    Learning rate scheduling using ReduceLROnPlateau
+### Optimization:
+- Adam optimizer with initial learning rate of 0.001
+- Learning rate scheduling using ReduceLROnPlateau
 
-Training Loop:
-    Mixed precision training using torch.cuda.amp for faster training and lower memory usage
-    Validation after each epoch to monitor performance
-    Early stopping to prevent overfitting
-    Model checkpointing to save the best model based on validation loss
+### Training Loop:
+- Mixed precision training using torch.cuda.amp for faster training and lower memory usage
+- Validation after each epoch to monitor performance
+- Early stopping to prevent overfitting
+- Model checkpointing to save the best model based on validation loss
 
-Monitoring and Visualization:
-    Tracking of training/validation loss, accuracy, and mIoU
-    Periodic visualization of segmentation results during training
+### Monitoring and Visualization:
+- Tracking of training/validation loss, accuracy, and mIoU
+- Periodic visualization of segmentation results during training
 
 The training process is designed to be efficient and effective, with mechanisms in place to handle the challenges specific to aerial image segmentation, such as class imbalance and the need for precise boundaries.
 
@@ -84,15 +82,14 @@ The model is evaluated using:
     Pixel Accuracy
     Combined Loss (Dice Loss + Cross-Entropy Loss)
 
-Mean Intersection over Union (mIoU):
-    Provides a measure of overlap between predicted and ground truth segmentation masks
-    Less sensitive to class imbalance compared to pixel accuracy
-    Penalizes both over-segmentation and under-segmentation
-    Gives equal importance to all classes, regardless of their frequency in the dataset
+### Mean Intersection over Union (mIoU):
+- Provides a measure of overlap between predicted and ground truth segmentation masks
+- Less sensitive to class imbalance compared to pixel accuracy
+- Penalizes both over-segmentation and under-segmentation
+- Gives equal importance to all classes, regardless of their frequency in the dataset
 
-Pixel Accuracy:
-    Represents the percentage of correctly classified pixels
-    Can be misleading in cases of severe class imbalance which is prevalent in this data    
+## Pixel Accuracy:
+- Represents the percentage of correctly classified pixels but can be misleading in cases of severe class imbalance which is prevalent in this data   
     
 ## Results
 The model's performance can be assessed using the plots generated after training, showing:
