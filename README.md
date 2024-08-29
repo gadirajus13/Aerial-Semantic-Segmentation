@@ -28,19 +28,19 @@ The dataset was divided into train, validation, and tests sets on a 70,20,10 spl
 
 ## Model Architecture
 YOLOv5 Encoder:
-    Utilizes the YOLOv5 model as a feature extractor
-    Extracts multi-scale features from the input images
-    Provides rich semantic information due to its pretraining on object detection tasks
+-Utilizes the YOLOv5 model as a feature extractor
+-Extracts multi-scale features from the input images
+-Provides rich semantic information due to its pretraining on object detection tasks
 
 Custom U-Net Decoder:
 
-Consists of a series of upsampling blocks (Up modules)
-Each Up module includes:
-    Bilinear upsampling
-    Concatenation with skip connections from the encoder
-    Two convolutional layers with batch normalization and ReLU activation
-Gradually increases spatial resolution while decreasing channel depth
-Incorporates skip connections to preserve fine-grained details
+-Consists of a series of upsampling blocks (Up modules)
+-Each Up module includes:
+    -Bilinear upsampling
+    -Concatenation with skip connections from the encoder
+    -Two convolutional layers with batch normalization and ReLU activation
+-Gradually increases spatial resolution while decreasing channel depth
+-Incorporates skip connections to preserve fine-grained details
 
 Key components of the architecture:
 
