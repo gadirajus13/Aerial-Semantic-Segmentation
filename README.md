@@ -78,9 +78,9 @@ The training process is designed to be efficient and effective, with mechanisms 
 
 ## Evaluation Metrics
 The model is evaluated using:
-    Mean Intersection over Union (mIoU)
-    Pixel Accuracy
-    Combined Loss (Dice Loss + Cross-Entropy Loss)
+- Mean Intersection over Union (mIoU)
+- Pixel Accuracy
+- Combined Loss (Dice Loss + Cross-Entropy Loss)
 
 ### Mean Intersection over Union (mIoU):
 - Provides a measure of overlap between predicted and ground truth segmentation masks, penalizing both over-segmentation and under-segmentation
@@ -96,7 +96,7 @@ The model's performance can be assessed using the plots generated after training
 This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of around 81%, however have a much lwoer mIoU of .32, indicating that this architecture provides more accurate masks per class on average compared to typical approaches. The majority of discrepency between the mIoU and pixel accuracy comes from the classification for under-sampled classes within the dataset, which means the model can be further improved with mroe data preprocessing.
 
 Here are a few of the results obtained from running the model on the test data:
-
+![Test 1](results/Test%20Results.png)
 
 ## Future Work
 In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in teh dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy.
