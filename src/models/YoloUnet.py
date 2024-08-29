@@ -1,5 +1,5 @@
 # If you use the following architecture, please reference the following github
-#  www.github.com/gadiraju.s13
+#  www.github.com/gadirajus13
 
 import torch
 import torch.nn as nn
