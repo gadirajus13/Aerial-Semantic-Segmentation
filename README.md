@@ -88,7 +88,7 @@ The model is evaluated using:
 - Penalizes both over-segmentation and under-segmentation
 - Gives equal importance to all classes, regardless of their frequency in the dataset
 
-## Pixel Accuracy:
+### Pixel Accuracy:
 - Represents the percentage of correctly classified pixels but can be misleading in cases of severe class imbalance which is prevalent in this data   
     
 ## Results
