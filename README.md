@@ -34,13 +34,13 @@ YOLOv5 Encoder:
 
 Custom U-Net Decoder:
 
--Consists of a series of upsampling blocks (Up modules)
--Each Up module includes:
-    -Bilinear upsampling
-    -Concatenation with skip connections from the encoder
-    -Two convolutional layers with batch normalization and ReLU activation
--Gradually increases spatial resolution while decreasing channel depth
--Incorporates skip connections to preserve fine-grained details
+- Consists of a series of upsampling blocks (Up modules)
+- Each Up module includes:
+    - Bilinear upsampling
+    - Concatenation with skip connections from the encoder
+    - Two convolutional layers with batch normalization and ReLU activation
+- Gradually increases spatial resolution while decreasing channel depth
+- Incorporates skip connections to preserve fine-grained details
 
 Key components of the architecture:
 
