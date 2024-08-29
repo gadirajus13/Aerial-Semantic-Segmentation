@@ -1,6 +1,6 @@
 # Aerial-Semantic-Segmentation
 
-This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery for 22 distinct classes. The model achieves 86% pixel accuracy and a mIoU of 0.53 when trained on a dataset of only 280 images with validation done on 80 images and testing on 40 images. Furthermore, this custom architecture produces a **76% higher mIoU** while also achieving **6% higher accuracy** compared to a baseline model of UNet MobileNet_v2 with ImageNet weights.
+This project implements a custom YoloUNet architecture for aerial image segmentation, combining a YOLOv5 encoder with a U-Net-style decoder to perform semantic segmentation on aerial imagery for 22 distinct classes. The model achieves 86% pixel accuracy and a mIoU of 0.53 when trained on a dataset of only 280 images with validation done on 80 images and testing on 40 images. Furthermore, this custom architecture produces a **71% higher mIoU** while also achieving **6% higher accuracy** compared to a baseline model of UNet MobileNet_v2 with ImageNet weights.
 
 ## Project Overview
 
@@ -93,7 +93,7 @@ The model is evaluated using:
 ## Results
 The model's performance can be assessed using the plots generated after training, showing the loss, accuracy, and mIoU. Furthermore, the model is then tested on the test dataset which consists of 40 images.
 
-This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of approximately 80%, however have a much lower mIoU of .302, indicating that this architecture provides more accurate masks per class on average compared to typical approaches. The majority of discrepency between the mIoU and pixel accuracy comes from the classification for under-sampled classes within the dataset, which means the model can be further improved with mroe data preprocessing.
+This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test data which boasts a significant improvement compared to other approaches to this dataset. Utilizing the UNet Mobile architecture with pre-loaded ImageNet weights, as others have in the Kaggle link to the dataset, they achieve a similar accuracy of approximately 80%, however have a much lower mIoU of .31, indicating that this architecture provides more accurate masks per class on average compared to typical approaches. The majority of discrepency between the mIoU and pixel accuracy comes from the classification for under-sampled classes within the dataset, which means the model can be further improved with mroe data preprocessing.
 
 Here are a few of the results obtained from running the model on the test data:
 ![Test 1](results/Test%20Results.png)
