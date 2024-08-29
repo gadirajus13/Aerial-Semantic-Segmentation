@@ -97,6 +97,7 @@ This model acheived a peak pixel accuracy of 86% with a mIoU of .53 on the test 
 
 Here are a few of the results obtained from running the model on the test data:
 ![Test 1](results/Test%20Results.png)
+![Test 2](results/Test%20Results%203.png)
 
 ## Future Work
 In order to further improve the model accuracy and mIoU, I would like to implement oversampling of classes that are underepresented in teh dataset currently as they have a heavy influence on the mIoU and will aid in further increasing the overall pixel accuracy.
